@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @FeignClient(value = "productsSOAP", url = "http://localhost:8080")
-public interface ProductClientSOAP {
+public interface ProductClient {
     @RequestMapping(method = RequestMethod.GET, value = "/product/")
     List<ProductInfo> getAllProducts();
 

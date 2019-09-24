@@ -1,6 +1,6 @@
 package com.example.pssa.controllers;
 
-import com.example.pssa.feignclients.ProductClientSOAP;
+import com.example.pssa.feignclients.ProductClient;
 import org.example.soap.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ public class ProductControllerSOAP {
     private static final Logger logger = LoggerFactory.getLogger(ProductControllerSOAP.class);
 
     @Autowired
-    private ProductClientSOAP productClientSOAP;
+    private ProductClient productClient;
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAllProductsRequest")
     @ResponsePayload
@@ -28,7 +28,7 @@ public class ProductControllerSOAP {
         logger.info("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
         GetAllProductsResponse response = new GetAllProductsResponse();
-        List<ProductInfo> products = productClientSOAP.getAllProducts();
+        List<ProductInfo> products = productClient.getAllProducts();
         response.getProducts().addAll(products);
 
         return response;
@@ -41,7 +41,7 @@ public class ProductControllerSOAP {
         logger.info("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
         GetProductByIdResponse response = new GetProductByIdResponse();
-        ProductInfo product = productClientSOAP.getProductById(request.getId());
+        ProductInfo product = productClient.getProductById(request.getId());
         response.setProduct(product);
 
         return response;
@@ -56,7 +56,7 @@ public class ProductControllerSOAP {
         AddProductResponse response = new AddProductResponse();
         ProductInfo receivedProduct =  request.getProduct();
         receivedProduct.setId(null);
-        ProductInfo addedProduct = productClientSOAP.addProduct(receivedProduct);
+        ProductInfo addedProduct = productClient.addProduct(receivedProduct);
         response.setProduct(addedProduct);
 
         return response;
@@ -69,7 +69,7 @@ public class ProductControllerSOAP {
         logger.info("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
         SearchResponse response = new SearchResponse();
-        List<String> names = productClientSOAP.searchProducts(request.getName(), request.getParameter(), request.getValue());
+        List<String> names = productClient.searchProducts(request.getName(), request.getParameter(), request.getValue());
         response.getProductNames().addAll(names);
         return response;
     }
