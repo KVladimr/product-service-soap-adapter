@@ -25,7 +25,7 @@ public class ProductControllerSOAP {
     @ResponsePayload
     public GetAllProductsResponse getAllProducts(@RequestPayload GetAllProductsRequest request) {
 
-        logger.info("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
+        logger.debug("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
         GetAllProductsResponse response = new GetAllProductsResponse();
         List<ProductInfo> products = productClient.getAllProducts();
@@ -38,7 +38,7 @@ public class ProductControllerSOAP {
     @ResponsePayload
     public GetProductByIdResponse getProductById(@RequestPayload GetProductByIdRequest request) {
 
-        logger.info("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
+        logger.debug("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
         GetProductByIdResponse response = new GetProductByIdResponse();
         ProductInfo product = productClient.getProductById(request.getId());
@@ -51,7 +51,7 @@ public class ProductControllerSOAP {
     @ResponsePayload
     public AddProductResponse addProduct(@RequestPayload AddProductRequest request) {
 
-        logger.info("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
+        logger.debug("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
         AddProductResponse response = new AddProductResponse();
         ProductInfo receivedProduct =  request.getProduct();
@@ -66,7 +66,7 @@ public class ProductControllerSOAP {
     @ResponsePayload
     public SearchResponse searchProducts(@RequestPayload SearchRequest request) {
 
-        logger.info("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
+        logger.debug("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
         SearchResponse response = new SearchResponse();
         List<String> names = productClient.searchProducts(request.getName(), request.getParameter(), request.getValue());
