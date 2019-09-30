@@ -1,6 +1,8 @@
 package com.example.pssa.controllers;
 
+import com.example.pssa.exceptions.ServiceUnavailableException;
 import com.example.pssa.feignclients.ProductClient;
+import feign.FeignException;
 import org.example.soap.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +30,12 @@ public class ProductControllerSOAP {
         logger.debug("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
         GetAllProductsResponse response = new GetAllProductsResponse();
-        List<ProductInfo> products = productClient.getAllProducts();
-        response.getProducts().addAll(products);
+        try {
+            List<ProductInfo> products = productClient.getAllProducts();
+            response.getProducts().addAll(products);
+        } catch (FeignException ex) {
+            throw new ServiceUnavailableException("Service unavailable", ex);
+        }
 
         return response;
     }
@@ -41,8 +47,12 @@ public class ProductControllerSOAP {
         logger.debug("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
         GetProductByIdResponse response = new GetProductByIdResponse();
-        ProductInfo product = productClient.getProductById(request.getId());
-        response.setProduct(product);
+        try {
+            ProductInfo product = productClient.getProductById(request.getId());
+            response.setProduct(product);
+        } catch (FeignException ex) {
+            throw new ServiceUnavailableException("Service unavailable", ex);
+        }
 
         return response;
     }
@@ -54,10 +64,14 @@ public class ProductControllerSOAP {
         logger.debug("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
         AddProductResponse response = new AddProductResponse();
-        ProductInfo receivedProduct =  request.getProduct();
-        receivedProduct.setId(null);
-        ProductInfo addedProduct = productClient.addProduct(receivedProduct);
-        response.setProduct(addedProduct);
+        try {
+            ProductInfo receivedProduct =  request.getProduct();
+            receivedProduct.setId(null);
+            ProductInfo addedProduct = productClient.addProduct(receivedProduct);
+            response.setProduct(addedProduct);
+        } catch (FeignException ex) {
+            throw new ServiceUnavailableException("Service unavailable", ex);
+        }
 
         return response;
     }
@@ -69,8 +83,13 @@ public class ProductControllerSOAP {
         logger.debug("SOAP adapter's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
         SearchResponse response = new SearchResponse();
-        List<String> names = productClient.searchProducts(request.getName(), request.getParameter(), request.getValue());
-        response.getProductNames().addAll(names);
+        try {
+            List<String> names = productClient.searchProducts(request.getName(), request.getParameter(), request.getValue());
+            response.getProductNames().addAll(names);
+        } catch (FeignException ex) {
+            throw new ServiceUnavailableException("Service unavailable", ex);
+        }
+
         return response;
     }
 }
