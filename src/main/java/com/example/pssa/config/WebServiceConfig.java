@@ -40,9 +40,24 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return definition;
     }
 
+    @Bean(name = "rabbit")
+    public DefaultWsdl11Definition rabbitMQWsdl11Definition(XsdSchema rabbitSchema) {
+        DefaultWsdl11Definition definition = new DefaultWsdl11Definition();
+        definition.setPortTypeName("ProductPort2");
+        definition.setTargetNamespace("http://example.org/rabbit");
+        definition.setLocationUri("/ws");
+        definition.setSchema(rabbitSchema);
+        return definition;
+    }
+
     @Bean
     public XsdSchema productsSchema() {
         return new SimpleXsdSchema(new ClassPathResource("schema/product.xsd"));
+    }
+
+    @Bean
+    public XsdSchema rabbitSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("schema/rabbit.xsd"));
     }
 
     @Bean

@@ -48,7 +48,7 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
             logger.debug("Response status: {}", response.getStatus());
 
             String responseBody = new String(responseWrapper.getContentAsByteArray());
-            logger.info("Response body: {}", responseBody);
+            logger.trace("Response body: {}", responseBody);
 
             responseWrapper.copyBodyToResponse();
         }
