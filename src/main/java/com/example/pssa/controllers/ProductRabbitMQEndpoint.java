@@ -11,7 +11,6 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +27,7 @@ public class ProductRabbitMQEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAllProductsRequest")
     @ResponsePayload
-    public GetAllProductsResponse getAllProducts(@RequestPayload GetAllProductsRequest request) throws IOException {
+    public GetAllProductsResponse getAllProducts(@RequestPayload GetAllProductsRequest request) {
 
         logger.debug("RabbitMQ Endpoint's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
@@ -41,7 +40,7 @@ public class ProductRabbitMQEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetProductByIdRequest")
     @ResponsePayload
-    public GetProductByIdResponse getProductById(@RequestPayload GetProductByIdRequest request) throws IOException {
+    public GetProductByIdResponse getProductById(@RequestPayload GetProductByIdRequest request) {
 
         logger.debug("RabbitMQ Endpoint's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
@@ -54,7 +53,7 @@ public class ProductRabbitMQEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddProductRequest")
     @ResponsePayload
-    public AddProductResponse addProduct(@RequestPayload AddProductRequest request) throws IOException {
+    public AddProductResponse addProduct(@RequestPayload AddProductRequest request) {
 
         logger.debug("RabbitMQ Endpoint's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
@@ -67,7 +66,7 @@ public class ProductRabbitMQEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "SearchRequest")
     @ResponsePayload
-    public SearchResponse searchProducts(@RequestPayload SearchRequest request) throws IOException {
+    public SearchResponse searchProducts(@RequestPayload SearchRequest request) {
 
         logger.debug("RabbitMQ Endpoint's " + (new Object() {}.getClass().getEnclosingMethod().getName()) + " method was called");
 
